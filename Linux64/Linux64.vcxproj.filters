@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="RunAllTest.cpp" />
+    <ClCompile Include="SDKNewTest.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="01_ITA_GetTempMatrixInfo.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="02_ITA_GetY16MatrixInfo.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="03_ITA_TempMatrixRotation.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="04_ITA_TempMatrix2Rgb.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="05_ITA_GetTempMatrixMaxMinT.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="06_ITA_GetColorStripData.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="07_ITA_GenerateHeapMapJpg.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="08_Y16Set.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+    <ClCompile Include="ITA_SDK.cpp">
+      <Filter>ITA</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ITA">
+      <UniqueIdentifier>{a93fa739-478b-4276-85bc-a6aa52eafe84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{f131957f-fc6d-4ebc-a6e5-99cb90201bb6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK_TEST.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
