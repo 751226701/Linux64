@@ -9,6 +9,18 @@
 #include "gtest/gtest.h"
 using namespace std;
 
+static void GetIrRtsp(unsigned char* outdata, int w, int h, void* pUser)
+{
+    printf("outdata is %s\n", outdata);
+    printf("w is %d, h is %d\n", w, h);
+    cout << pUser << endl;
+    sleep(2);
+}
+static void GetRecordStatus(int state, void* pUser)
+{
+    //printf("Current record status is %d\n", state);
+    sleep(2);
+}
 static void GetAccessNotify(SGP_ACCESSVIOLATIONNOTIFY notify, void* pUser)
 {
     printf("异常登录用户名是%s\n", notify.user);
@@ -65,7 +77,7 @@ int main()
     }*/
     //cout << handle << endl;
 
-    const char* server = "192.168.21.4";
+    const char* server = "192.168.21.232";
     const char* username = "root";
     const char* password = "guide123";
     int port = 80;
@@ -112,6 +124,7 @@ int main()
         //自动调焦回调
         SGP_RegisterAutoFocusCallback(handle, GetFocusResult, 0);
 
+        sleep(99999);
 
         int rets = SGP_Logout(handle);
         if (rets == SGP_OK)
