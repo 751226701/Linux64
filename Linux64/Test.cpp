@@ -9,16 +9,25 @@
 #include "gtest/gtest.h"
 using namespace std;
 
-static void GetIrRtsp(unsigned char* outdata, int w, int h, void* pUser)
+static void GetAccessNotify(SGP_ACCESSVIOLATIONNOTIFY notify, void* pUser)
 {
-    //printf("outdata is %s\n", outdata);
-    printf("w is %d, h is %d\n", w, h);
-    sleep(2);
+    printf("异常登录用户名是%s\n", notify.user);
+    printf("异常登录IP是%s\n", notify.ip);
+    printf("异常登录时间是%s\n", notify.time);
 }
-static void GetRecordStatus(int state, void* pUser)
+static void MemoryFull(SGP_MEMORYFULLNOTIFY notify, void* pUser)
+
 {
-    printf("Current record status is %d\n", state);
-    sleep(2);
+    printf("总存储是%dG\n", notify.total);
+    printf("可用大小%dM\n", notify.free);
+    printf("报警阈值%dM\n", notify.limit);
+}
+static void NetworkError(SGP_NETWORKERRORNOTIFY notify, void* pUser)
+
+{
+    //std::string ip(notify.ip);
+    cout << "类型：" << notify.type << endl;
+    cout << "ip:" << notify.ip << endl;
 }
 static void GetTempNotify(SGP_TEMPALARMNOTIFY notify, void* pUser)
 {
@@ -36,12 +45,6 @@ static void GetTempNotify(SGP_TEMPALARMNOTIFY notify, void* pUser)
     if (notify.type == 3) { cout << "冷点报警！" << endl; }
     cout << notify.name << endl;
     cout << endl;
-}
-static void GetAccessNotify(SGP_ACCESSVIOLATIONNOTIFY notify, void* pUser)
-{
-    printf("异常登录用户名是%s\n", notify.user);
-    printf("异常登录IP是%s\n", notify.ip);
-    printf("异常登录时间是%s\n", notify.time);
 }
 static void GetFocusResult(int result, void* pUser)
 {
@@ -78,34 +81,36 @@ int main()
         cout << "SDK版本： " << info.sdk_version << endl;
         
 
-        
 
         //视频回调
-        //for (int i = 1; i <= 1; i++)
-        //{
-        //    int result = SGP_OpenIrVideo(handle, GetIrRtsp, 0);
-        //    printf("第%d次SGP_OpenIrVideo接口返回值是%d\n", i, result);
-        //    sleep(5);
-        //    std::string IRFile = "1234.mp4";
-        //    int startResult = SGP_StartRecord(handle, SGP_IR_VIDEO, IRFile.c_str(), GetRecordStatus, 0);
-        //    printf("SGP_StartRecord接口红外返回值是%d\n", startResult);
-        //    sleep(30);
-        //    SGP_StopRecord(handle, SGP_IR_VIDEO);
-        //    //关闭视频流
-        //    SGP_CloseIrVideo(handle);
-        //}
-
-        //聚焦回调
-       /* SGP_RegisterAutoFocusCallback(handle, GetFocusResult, 0);
-        sleep(3000);*/
-
-        //告警回调
-        /*SGP_RegisterTempAlarmCallback(handle, GetTempNotify, 0);
-        sleep(30000);*/
+        for (int i = 1; i <= 1; i++)
+        {
+            int result = SGP_OpenIrVideo(handle, GetIrRtsp, 0);
+            printf("第%d次SGP_OpenIrVideo接口返回值是%d\n", i, result);
+            sleep(5);
+            std::string IRFile = "1234.mp4";
+            int startResult = SGP_StartRecord(handle, SGP_IR_VIDEO, IRFile.c_str(), GetRecordStatus, 0);
+            printf("SGP_StartRecord接口红外返回值是%d\n", startResult);
+            sleep(30);
+            SGP_StopRecord(handle, SGP_IR_VIDEO);
+            //关闭视频流
+            SGP_CloseIrVideo(handle);
+        }
 
         //非法访问回调
-       /* SGP_RegisterAccessViolationCallback(handle, GetAccessNotify, 0);
-        sleep(3000);*/
+        SGP_RegisterAccessViolationCallback(handle, GetAccessNotify, 0);
+
+        //内存已满回调
+        SGP_RegisterMemoryFullCallback(handle, MemoryFull, 0);
+
+        //网络异常回调
+        SGP_RegisterNetworkErrorCallback(handle, NetworkError, 0);
+
+        //温度告警回调
+        SGP_RegisterTempAlarmCallback(handle, GetTempNotify, 0);
+
+        //自动调焦回调
+        SGP_RegisterAutoFocusCallback(handle, GetFocusResult, 0);
 
 
         int rets = SGP_Logout(handle);
