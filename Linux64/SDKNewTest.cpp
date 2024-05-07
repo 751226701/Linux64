@@ -9,32 +9,70 @@
 #include "gtest/gtest.h"
 using namespace std;
 
+//class SgpTest : public testing::Test
+//{
+//public:
+//    SGP_HANDLE handle;
+//
+//    void SetUp() override
+//    {
+//        handle = SGP_InitDevice();
+//        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!";
+//
+//        const char* server = "192.168.21.4";
+//        const char* username = "root";
+//        const char* password = "guide123";
+//        int port = 80;
+//        int retl = SGP_Login(handle, server, username, password, port);
+//        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed";
+//    }
+//
+//    void TearDown() override
+//    {
+//        int retq = SGP_Logout(handle);
+//        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed";
+//
+//        SGP_UnInitDevice(handle);
+//    }
+//};
+
 class SgpTest : public testing::Test
 {
 public:
-    SGP_HANDLE handle;
+    static SGP_HANDLE handle;
 
-    void SetUp() override
+    static void SetUpTestCase()
     {
         handle = SGP_InitDevice();
-        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!";
+        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
 
-        const char* server = "192.168.21.4";
+        const char* server = "192.168.21.31";
         const char* username = "root";
         const char* password = "guide123";
         int port = 80;
         int retl = SGP_Login(handle, server, username, password, port);
-        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed";
+        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed" << endl;
+    }
+
+    static void TearDownTestCase()
+    {
+        int retq = SGP_Logout(handle);
+        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed" << endl;
+
+        SGP_UnInitDevice(handle);
+    }
+
+    void SetUp() override
+    {
+        sleep(1);
     }
 
     void TearDown() override
     {
-        int retq = SGP_Logout(handle);
-        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed";
 
-        SGP_UnInitDevice(handle);
     }
 };
+SGP_HANDLE SgpTest::handle;
 
 //一、SGP_SetTempPoints
 //01 设置索引，type=0  
@@ -89,7 +127,7 @@ TEST_F(SgpTest, 04_last_line)
     int* index = (int*)malloc(pointNum * sizeof(int));
     for (int i = 0; i < pointNum; i++)
     {
-        index[i] = i + 327040;
+        index[i] = i + 327039;
     }
     int ret = SGP_SetTempPoints(handle, index, pointNum, 1);
     EXPECT_EQ(ret, SGP_OK) << "04_last_line fail" << endl;
@@ -104,7 +142,7 @@ TEST_F(SgpTest, 05_first_column)
     int* index = (int*)malloc(pointNum * sizeof(int));
     for (int i = 0; i < pointNum; i++)
     {
-        index[i] = i * 640 - 1;
+        index[i] = i * 640;
     }
     int ret = SGP_SetTempPoints(handle, index, pointNum, 1);
     EXPECT_EQ(ret, SGP_OK) << "05_first_column fail" << endl;
@@ -315,7 +353,7 @@ TEST_F(SgpTest, 16_last_line_getTemp)
     int* index = (int*)malloc(pointNum * sizeof(int));
     for (int i = 0; i < pointNum; i++)
     {
-        index[i] = i + 327040;
+        index[i] = i + 327039;
     }
     int ret = SGP_SetTempPoints(handle, index, pointNum, 1);
     ASSERT_EQ(ret, SGP_OK) << "16_last_line fail" << endl;
@@ -345,7 +383,7 @@ TEST_F(SgpTest, 17_first_column_getTemp)
     int* index = (int*)malloc(pointNum * sizeof(int));
     for (int i = 0; i < pointNum; i++)
     {
-        index[i] = i * 640 - 1;
+        index[i] = i * 640;
     }
     int ret = SGP_SetTempPoints(handle, index, pointNum, 1);
     ASSERT_EQ(ret, SGP_OK) << "17_first_column fail" << endl;

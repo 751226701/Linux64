@@ -1,4 +1,4 @@
-all: target2 target3 
+all: target2 target3 target1
 
 target1: SDKNewTest.cpp
 	g++ -g SDKNewTest.cpp -o SDKNewTest -I/Test/include -L/Test/linux64/ -lgtest -lpthread -lSgpApi -std=c++14

@@ -77,7 +77,7 @@ int main()
     }*/
     //cout << handle << endl;
 
-    const char* server = "192.168.21.232";
+    const char* server = "192.168.21.31";
     const char* username = "root";
     const char* password = "guide123";
     int port = 80;
@@ -91,40 +91,38 @@ int main()
         memset(&info, 0x00, sizeof(info));
         SGP_GetVersionInfo(handle, &info);
         cout << "SDK版本： " << info.sdk_version << endl;
-        
+               
+        ////视频回调
+        //for (int i = 1; i <= 1; i++)
+        //{
+        //    int result = SGP_OpenIrVideo(handle, GetIrRtsp, 0);
+        //    printf("第%d次SGP_OpenIrVideo接口返回值是%d\n", i, result);
+        //    sleep(5);
+        //    std::string IRFile = "1234.mp4";
+        //    int startResult = SGP_StartRecord(handle, SGP_IR_VIDEO, IRFile.c_str(), GetRecordStatus, 0);
+        //    printf("SGP_StartRecord接口红外返回值是%d\n", startResult);
+        //    sleep(30);
+        //    SGP_StopRecord(handle, SGP_IR_VIDEO);
+        //    //关闭视频流
+        //    SGP_CloseIrVideo(handle);
+        //}
 
+        ////非法访问回调
+        //SGP_RegisterAccessViolationCallback(handle, GetAccessNotify, 0);
 
-        //视频回调
-        for (int i = 1; i <= 1; i++)
-        {
-            int result = SGP_OpenIrVideo(handle, GetIrRtsp, 0);
-            printf("第%d次SGP_OpenIrVideo接口返回值是%d\n", i, result);
-            sleep(5);
-            std::string IRFile = "1234.mp4";
-            int startResult = SGP_StartRecord(handle, SGP_IR_VIDEO, IRFile.c_str(), GetRecordStatus, 0);
-            printf("SGP_StartRecord接口红外返回值是%d\n", startResult);
-            sleep(30);
-            SGP_StopRecord(handle, SGP_IR_VIDEO);
-            //关闭视频流
-            SGP_CloseIrVideo(handle);
-        }
+        ////内存已满回调
+        //SGP_RegisterMemoryFullCallback(handle, MemoryFull, 0);
 
-        //非法访问回调
-        SGP_RegisterAccessViolationCallback(handle, GetAccessNotify, 0);
+        ////网络异常回调
+        //SGP_RegisterNetworkErrorCallback(handle, NetworkError, 0);
 
-        //内存已满回调
-        SGP_RegisterMemoryFullCallback(handle, MemoryFull, 0);
+        ////温度告警回调
+        //SGP_RegisterTempAlarmCallback(handle, GetTempNotify, 0);
 
-        //网络异常回调
-        SGP_RegisterNetworkErrorCallback(handle, NetworkError, 0);
+        ////自动调焦回调
+        //SGP_RegisterAutoFocusCallback(handle, GetFocusResult, 0);
 
-        //温度告警回调
-        SGP_RegisterTempAlarmCallback(handle, GetTempNotify, 0);
-
-        //自动调焦回调
-        SGP_RegisterAutoFocusCallback(handle, GetFocusResult, 0);
-
-        sleep(99999);
+        //sleep(99999);
 
         int rets = SGP_Logout(handle);
         if (rets == SGP_OK)
@@ -146,12 +144,4 @@ int main()
 
 
 }
-
-
-
-
-
-
-
-
 
