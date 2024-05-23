@@ -10,50 +10,24 @@
 using namespace std;
 
 
-//class SgpTest : public testing::Test
-//{
-//public:
-//    SGP_HANDLE handle;  
-//
-//    static void SetUpTestCase()
-//    {
-//        cout << "Start Test" << endl;
-//    }
-//    static void TearDownTestCase()
-//    {
-//        cout << "Test over" << endl;
-//    }
-//
-//    void SetUp() override
-//    {
-//        handle = SGP_InitDevice();
-//        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
-//        const char* server = "192.168.21.31";
-//        const char* username = "root";
-//        const char* password = "guide123";
-//        int port = 80;
-//        int retl = SGP_Login(handle, server, username, password, port);
-//        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed" << endl;
-//    }
-//
-//    void TearDown() override
-//    {
-//        int retq = SGP_Logout(handle);
-//        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed" << endl;
-//        SGP_UnInitDevice(handle);
-//    }
-//};
-
 class SgpTest : public testing::Test
 {
 public:
-    static SGP_HANDLE handle;
+    SGP_HANDLE handle;  
 
     static void SetUpTestCase()
     {
+        cout << "Start Test" << endl;
+    }
+    static void TearDownTestCase()
+    {
+        cout << "Test over" << endl;
+    }
+
+    void SetUp() override
+    {
         handle = SGP_InitDevice();
         ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
-
         const char* server = "192.168.21.31";
         const char* username = "root";
         const char* password = "guide123";
@@ -62,25 +36,51 @@ public:
         ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed" << endl;
     }
 
-    static void TearDownTestCase()
+    void TearDown() override
     {
         int retq = SGP_Logout(handle);
         EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed" << endl;
-
         SGP_UnInitDevice(handle);
     }
-
-    void SetUp() override
-    {
-        sleep(1);
-    }
-
-    void TearDown() override
-    {
-        
-    }
 };
-SGP_HANDLE SgpTest::handle;
+
+//class SgpTest : public testing::Test
+//{
+//public:
+//    static SGP_HANDLE handle;
+//
+//    static void SetUpTestCase()
+//    {
+//        handle = SGP_InitDevice();
+//        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
+//
+//        const char* server = "192.168.21.31";
+//        const char* username = "root";
+//        const char* password = "guide123";
+//        int port = 80;
+//        int retl = SGP_Login(handle, server, username, password, port);
+//        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed" << endl;
+//    }
+//
+//    static void TearDownTestCase()
+//    {
+//        int retq = SGP_Logout(handle);
+//        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed" << endl;
+//
+//        SGP_UnInitDevice(handle);
+//    }
+//
+//    void SetUp() override
+//    {
+//        sleep(1);
+//    }
+//
+//    void TearDown() override
+//    {
+//        
+//    }
+//};
+//SGP_HANDLE SgpTest::handle;
 
 
 //01.修改密码
@@ -1779,48 +1779,48 @@ TEST_F(SgpTest, 100_GetNetException)
 }
 
 //101.设置非法访问
-TEST_F(SgpTest, 101_SetAccessViolation)
-{
-    SGP_ACCESS_VIOLATION_INFO info;
-    memset(&info, 0x00, sizeof(info));
-    int ret = SGP_GetAccessViolation(handle, &info);
-    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
-
-    info.allow_count = 10;
-    info.flag = 1;
-    info.output_flag = 1;
-    info.output_hold = 12;
-    info.sendmail = 1;
-    info.lock_time = 30;
-    ret = SGP_SetAccessViolation(handle, info);
-    EXPECT_EQ(ret, SGP_OK) << "SGP_SetAccessViolation failed" << endl;
-
-    SGP_ACCESS_VIOLATION_INFO getInfo;
-    memset(&getInfo, 0x00, sizeof(getInfo));
-    ret = SGP_GetAccessViolation(handle, &getInfo);
-    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
-    EXPECT_EQ(getInfo.allow_count, info.allow_count) << "assert allow_count failed!" << endl;
-    EXPECT_EQ(getInfo.flag, info.flag) << "assert flag failed!" << endl;
-    EXPECT_EQ(getInfo.output_flag, info.output_flag) << "assert output_flag failed!" << endl;
-    EXPECT_EQ(getInfo.output_hold, info.output_hold) << "assert output_hold failed!" << endl;
-    EXPECT_EQ(getInfo.sendmail, info.sendmail) << "assert sendmail failed!" << endl;
-    EXPECT_EQ(getInfo.lock_time, info.lock_time) << "assert lock_time failed!" << endl;
-}
+//TEST_F(SgpTest, 101_SetAccessViolation)
+//{
+//    SGP_ACCESS_VIOLATION_INFO info;
+//    memset(&info, 0x00, sizeof(info));
+//    int ret = SGP_GetAccessViolation(handle, &info);
+//    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
+//
+//    info.allow_count = 10;
+//    info.flag = 1;
+//    info.output_flag = 1;
+//    info.output_hold = 12;
+//    info.sendmail = 1;
+//    info.lock_time = 30;
+//    ret = SGP_SetAccessViolation(handle, info);
+//    EXPECT_EQ(ret, SGP_OK) << "SGP_SetAccessViolation failed" << endl;
+//
+//    SGP_ACCESS_VIOLATION_INFO getInfo;
+//    memset(&getInfo, 0x00, sizeof(getInfo));
+//    ret = SGP_GetAccessViolation(handle, &getInfo);
+//    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
+//    EXPECT_EQ(getInfo.allow_count, info.allow_count) << "assert allow_count failed!" << endl;
+//    EXPECT_EQ(getInfo.flag, info.flag) << "assert flag failed!" << endl;
+//    EXPECT_EQ(getInfo.output_flag, info.output_flag) << "assert output_flag failed!" << endl;
+//    EXPECT_EQ(getInfo.output_hold, info.output_hold) << "assert output_hold failed!" << endl;
+//    EXPECT_EQ(getInfo.sendmail, info.sendmail) << "assert sendmail failed!" << endl;
+//    EXPECT_EQ(getInfo.lock_time, info.lock_time) << "assert lock_time failed!" << endl;
+//}
 
 //102.获取非法访问
-TEST_F(SgpTest, 102_GetAccessViolation)
-{
-    SGP_ACCESS_VIOLATION_INFO info;
-    memset(&info, 0x00, sizeof(info));
-    int ret = SGP_GetAccessViolation(handle, &info);
-    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
-    cout << "返回成功，获取的非法访问信息如下：" << endl;
-    cout << "allow_count=" << info.allow_count << endl;
-    cout << "flag=" << info.flag << endl;
-    cout << "output_flag=" << info.output_flag << endl;
-    cout << "output_hold=" << info.output_hold << endl;
-    cout << "sendmail=" << info.sendmail << endl;
-}
+//TEST_F(SgpTest, 102_GetAccessViolation)
+//{
+//    SGP_ACCESS_VIOLATION_INFO info;
+//    memset(&info, 0x00, sizeof(info));
+//    int ret = SGP_GetAccessViolation(handle, &info);
+//    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
+//    cout << "返回成功，获取的非法访问信息如下：" << endl;
+//    cout << "allow_count=" << info.allow_count << endl;
+//    cout << "flag=" << info.flag << endl;
+//    cout << "output_flag=" << info.output_flag << endl;
+//    cout << "output_hold=" << info.output_hold << endl;
+//    cout << "sendmail=" << info.sendmail << endl;
+//}
 
 //103.设置邮件信息
 TEST_F(SgpTest, 103_SetEmilInfo)

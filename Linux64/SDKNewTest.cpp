@@ -9,70 +9,70 @@
 #include "gtest/gtest.h"
 using namespace std;
 
-//class SgpTest : public testing::Test
-//{
-//public:
-//    SGP_HANDLE handle;
-//
-//    void SetUp() override
-//    {
-//        handle = SGP_InitDevice();
-//        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!";
-//
-//        const char* server = "192.168.21.4";
-//        const char* username = "root";
-//        const char* password = "guide123";
-//        int port = 80;
-//        int retl = SGP_Login(handle, server, username, password, port);
-//        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed";
-//    }
-//
-//    void TearDown() override
-//    {
-//        int retq = SGP_Logout(handle);
-//        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed";
-//
-//        SGP_UnInitDevice(handle);
-//    }
-//};
-
 class SgpTest : public testing::Test
 {
 public:
-    static SGP_HANDLE handle;
+    SGP_HANDLE handle;
 
-    static void SetUpTestCase()
+    void SetUp() override
     {
         handle = SGP_InitDevice();
-        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
+        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!";
 
         const char* server = "192.168.21.31";
         const char* username = "root";
         const char* password = "guide123";
         int port = 80;
         int retl = SGP_Login(handle, server, username, password, port);
-        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed" << endl;
-    }
-
-    static void TearDownTestCase()
-    {
-        int retq = SGP_Logout(handle);
-        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed" << endl;
-
-        SGP_UnInitDevice(handle);
-    }
-
-    void SetUp() override
-    {
-        sleep(1);
+        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed";
     }
 
     void TearDown() override
     {
+        int retq = SGP_Logout(handle);
+        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed";
 
+        SGP_UnInitDevice(handle);
     }
 };
-SGP_HANDLE SgpTest::handle;
+
+//class SgpTest : public testing::Test
+//{
+//public:
+//    static SGP_HANDLE handle;
+//
+//    static void SetUpTestCase()
+//    {
+//        handle = SGP_InitDevice();
+//        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
+//
+//        const char* server = "192.168.21.31";
+//        const char* username = "root";
+//        const char* password = "guide123";
+//        int port = 80;
+//        int retl = SGP_Login(handle, server, username, password, port);
+//        ASSERT_EQ(retl, SGP_OK) << "SGP_Login failed" << endl;
+//    }
+//
+//    static void TearDownTestCase()
+//    {
+//        int retq = SGP_Logout(handle);
+//        EXPECT_EQ(retq, SGP_OK) << "SGP_Logout failed" << endl;
+//
+//        SGP_UnInitDevice(handle);
+//    }
+//
+//    void SetUp() override
+//    {
+//        sleep(1);
+//    }
+//
+//    void TearDown() override
+//    {
+//
+//    }
+//};
+//SGP_HANDLE SgpTest::handle;
 
 //一、SGP_SetTempPoints
 //01 设置索引，type=0  
