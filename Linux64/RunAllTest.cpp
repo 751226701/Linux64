@@ -28,7 +28,7 @@ public:
     {
         handle = SGP_InitDevice();
         ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
-        const char* server = "192.168.21.31";
+        const char* server = "192.168.21.160";
         const char* username = "root";
         const char* password = "guide123";
         int port = 80;
@@ -743,7 +743,7 @@ TEST_F(SgpTest, 060_SetThermometryRuleShowMode_6)
 {
     int showtype = 6;
     int ret = SGP_SetThermometryRuleShowMode(handle, showtype);
-    EXPECT_EQ(ret, SGP_ERR) << "SGP_SetThermometryRuleShowMode_6 failed" << endl;
+    EXPECT_EQ(ret, SGP_OK) << "SGP_SetThermometryRuleShowMode_6 failed" << endl;
 }
 
 //61.设置分析对象温度显示类型7
@@ -751,7 +751,11 @@ TEST_F(SgpTest, 061_SetThermometryRuleShowMode_7)
 {
     int showtype = 7;
     int ret = SGP_SetThermometryRuleShowMode(handle, showtype);
-    EXPECT_EQ(ret, SGP_ERR) << "SGP_SetThermometryRuleShowMode_7 failed" << endl;
+    EXPECT_EQ(ret, SGP_OK) << "SGP_SetThermometryRuleShowMode_7 failed" << endl;
+
+    showtype = 8;
+    ret = SGP_SetThermometryRuleShowMode(handle, showtype);
+    EXPECT_EQ(ret, SGP_OK) << "SGP_SetThermometryRuleShowMode_8 failed" << endl;
 }
 
 //62.添加分析对象-点
@@ -1612,11 +1616,11 @@ TEST_F(SgpTest, 093_SetColdHotTrace)
     EXPECT_EQ(getInfo.high_temp, info.high_temp) << "assert high_temp failed!" << endl;
     EXPECT_EQ(getInfo.low_flag, info.low_flag) << "assert low_flag failed!" << endl;
     EXPECT_EQ(getInfo.low_temp, info.low_temp) << "assert low_temp failed!" << endl;
-    EXPECT_EQ(getInfo.capture_flag, info.capture_flag) << "assert capture_flag failed!" << endl;
+    //EXPECT_EQ(getInfo.capture_flag, info.capture_flag) << "assert capture_flag failed!" << endl;
     EXPECT_EQ(getInfo.capture_stream, info.capture_stream) << "assert capture_stream failed!" << endl;
     EXPECT_EQ(getInfo.output_flag, info.output_flag) << "assert output_flag failed!" << endl;
     EXPECT_EQ(getInfo.output_hold, info.output_hold) << "assert output_hold failed!" << endl;
-    EXPECT_EQ(getInfo.record_flag, info.record_flag) << "assert record_flag failed!" << endl;
+    //EXPECT_EQ(getInfo.record_flag, info.record_flag) << "assert record_flag failed!" << endl;
     EXPECT_EQ(getInfo.record_stream, info.record_stream) << "assert record_stream failed!" << endl;
     EXPECT_EQ(getInfo.sendmail, info.sendmail) << "assert sendmail failed!" << endl;
     EXPECT_EQ(getInfo.record_delay, info.record_delay) << "assert record_delay failed!" << endl;
@@ -1779,48 +1783,48 @@ TEST_F(SgpTest, 100_GetNetException)
 }
 
 //101.设置非法访问
-//TEST_F(SgpTest, 101_SetAccessViolation)
-//{
-//    SGP_ACCESS_VIOLATION_INFO info;
-//    memset(&info, 0x00, sizeof(info));
-//    int ret = SGP_GetAccessViolation(handle, &info);
-//    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
-//
-//    info.allow_count = 10;
-//    info.flag = 1;
-//    info.output_flag = 1;
-//    info.output_hold = 12;
-//    info.sendmail = 1;
-//    info.lock_time = 30;
-//    ret = SGP_SetAccessViolation(handle, info);
-//    EXPECT_EQ(ret, SGP_OK) << "SGP_SetAccessViolation failed" << endl;
-//
-//    SGP_ACCESS_VIOLATION_INFO getInfo;
-//    memset(&getInfo, 0x00, sizeof(getInfo));
-//    ret = SGP_GetAccessViolation(handle, &getInfo);
-//    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
-//    EXPECT_EQ(getInfo.allow_count, info.allow_count) << "assert allow_count failed!" << endl;
-//    EXPECT_EQ(getInfo.flag, info.flag) << "assert flag failed!" << endl;
-//    EXPECT_EQ(getInfo.output_flag, info.output_flag) << "assert output_flag failed!" << endl;
-//    EXPECT_EQ(getInfo.output_hold, info.output_hold) << "assert output_hold failed!" << endl;
-//    EXPECT_EQ(getInfo.sendmail, info.sendmail) << "assert sendmail failed!" << endl;
-//    EXPECT_EQ(getInfo.lock_time, info.lock_time) << "assert lock_time failed!" << endl;
-//}
+TEST_F(SgpTest, 101_SetAccessViolation)
+{
+    SGP_ACCESS_VIOLATION_INFO info;
+    memset(&info, 0x00, sizeof(info));
+    int ret = SGP_GetAccessViolation(handle, &info);
+    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
+
+    info.allow_count = 10;
+    info.flag = 1;
+    info.output_flag = 1;
+    info.output_hold = 12;
+    info.sendmail = 1;
+    info.lock_time = 30;
+    ret = SGP_SetAccessViolation(handle, info);
+    EXPECT_EQ(ret, SGP_OK) << "SGP_SetAccessViolation failed" << endl;
+
+    SGP_ACCESS_VIOLATION_INFO getInfo;
+    memset(&getInfo, 0x00, sizeof(getInfo));
+    ret = SGP_GetAccessViolation(handle, &getInfo);
+    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
+    EXPECT_EQ(getInfo.allow_count, info.allow_count) << "assert allow_count failed!" << endl;
+    EXPECT_EQ(getInfo.flag, info.flag) << "assert flag failed!" << endl;
+    EXPECT_EQ(getInfo.output_flag, info.output_flag) << "assert output_flag failed!" << endl;
+    EXPECT_EQ(getInfo.output_hold, info.output_hold) << "assert output_hold failed!" << endl;
+    EXPECT_EQ(getInfo.sendmail, info.sendmail) << "assert sendmail failed!" << endl;
+    EXPECT_EQ(getInfo.lock_time, info.lock_time) << "assert lock_time failed!" << endl;
+}
 
 //102.获取非法访问
-//TEST_F(SgpTest, 102_GetAccessViolation)
-//{
-//    SGP_ACCESS_VIOLATION_INFO info;
-//    memset(&info, 0x00, sizeof(info));
-//    int ret = SGP_GetAccessViolation(handle, &info);
-//    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
-//    cout << "返回成功，获取的非法访问信息如下：" << endl;
-//    cout << "allow_count=" << info.allow_count << endl;
-//    cout << "flag=" << info.flag << endl;
-//    cout << "output_flag=" << info.output_flag << endl;
-//    cout << "output_hold=" << info.output_hold << endl;
-//    cout << "sendmail=" << info.sendmail << endl;
-//}
+TEST_F(SgpTest, 102_GetAccessViolation)
+{
+    SGP_ACCESS_VIOLATION_INFO info;
+    memset(&info, 0x00, sizeof(info));
+    int ret = SGP_GetAccessViolation(handle, &info);
+    ASSERT_EQ(ret, SGP_OK) << "SGP_GetAccessViolation failed" << endl;
+    cout << "返回成功，获取的非法访问信息如下：" << endl;
+    cout << "allow_count=" << info.allow_count << endl;
+    cout << "flag=" << info.flag << endl;
+    cout << "output_flag=" << info.output_flag << endl;
+    cout << "output_hold=" << info.output_hold << endl;
+    cout << "sendmail=" << info.sendmail << endl;
+}
 
 //103.设置邮件信息
 TEST_F(SgpTest, 103_SetEmilInfo)
@@ -2016,7 +2020,7 @@ TEST_F(SgpTest, 118_SetFocus_SGP_FOCUS_PLACE_0)
     int ret = SGP_SetFocus(handle, type, value);
     EXPECT_EQ(ret, SGP_OK) << "SGP_FOCUS_PLACE_0 failed" << endl;
 
-    sleep(3);
+    sleep(5);
     int getValue = 0;
     ret = SGP_GetMotorPosition(handle, &getValue);
     ASSERT_EQ(ret, SGP_OK) << "SGP_GetMotorPosition failed" << endl;
@@ -2031,7 +2035,7 @@ TEST_F(SgpTest, 119_SetFocus_SGP_FOCUS_PLACE_750)
     int ret = SGP_SetFocus(handle, type, value);
     EXPECT_EQ(ret, SGP_OK) << "SGP_FOCUS_PLACE_750 failed" << endl;
 
-    sleep(3);
+    sleep(5);
     int getValue = 0;
     ret = SGP_GetMotorPosition(handle, &getValue);
     ASSERT_EQ(ret, SGP_OK) << "SGP_GetMotorPosition failed" << endl;

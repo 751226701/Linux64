@@ -11,9 +11,9 @@ using namespace std;
 
 static void GetIrRtsp(unsigned char* outdata, int w, int h, void* pUser)
 {
-    printf("outdata is %s\n", outdata);
+    //printf("outdata is %s\n", outdata);
     printf("w is %d, h is %d\n", w, h);
-    cout << pUser << endl;
+    //cout << pUser << endl;
     sleep(2);
 }
 static void GetRecordStatus(int state, void* pUser)
@@ -100,7 +100,7 @@ int main()
     }*/
     //cout << handle << endl;
 
-    const char* server = "192.168.21.31";
+    const char* server = "192.168.21.160";
     const char* username = "root";
     const char* password = "guide123";
     int port = 80;
