@@ -84,7 +84,7 @@
     <NMakeIncludeSearchPath>C:\Users\gd09186\AppData\Local\Microsoft\Linux\HeaderCache\1.0\396683135\usr\include;C:\Users\gd09186\AppData\Local\Microsoft\Linux\HeaderCache\1.0\396683135\Test\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NMakeIncludeSearchPath>C:\Users\gd09186\AppData\Local\Microsoft\Linux\HeaderCache\1.0\396683135\usr\include;C:\Users\gd09186\AppData\Local\Microsoft\Linux\HeaderCache\1.0\396683135\Test\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>C:\Users\gd09186\AppData\Local\Microsoft\Linux\HeaderCache\1.0\396683135\Test\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <RemoteBuildCommandLine>make</RemoteBuildCommandLine>
     <RemoteReBuildCommandLine>make clean &amp; make</RemoteReBuildCommandLine>
     <RemoteCleanCommandLine>make clean</RemoteCleanCommandLine>
@@ -106,12 +106,17 @@
     <ClCompile Include="RunAllTest.cpp" />
     <ClCompile Include="SDKNewTest.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="TTT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="SDK_TEST.h" />
   </ItemGroup>
-  <ItemDefinitionGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <RemotePostBuildEvent>
+      <Command>rm -rf bin obj</Command>
+    </RemotePostBuildEvent>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

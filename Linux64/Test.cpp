@@ -98,9 +98,9 @@ int main()
     {
         cout << "初始化失败" << endl;
     }*/
-    //cout << handle << endl;
 
-    const char* server = "192.168.21.160";
+
+    const char* server = "192.168.21.32";
     const char* username = "root";
     const char* password = "guide123";
     int port = 80;

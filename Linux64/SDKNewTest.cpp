@@ -19,7 +19,7 @@ public:
         handle = SGP_InitDevice();
         ASSERT_NE(handle, 0) << "SGP_InitDevice failed!";
 
-        const char* server = "192.168.21.160";
+        const char* server = "192.168.21.32";
         const char* username = "root";
         const char* password = "guide123";
         int port = 80;

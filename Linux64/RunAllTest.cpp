@@ -28,7 +28,7 @@ public:
     {
         handle = SGP_InitDevice();
         ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
-        const char* server = "192.168.21.160";
+        const char* server = "192.168.21.32";
         const char* username = "root";
         const char* password = "guide123";
         int port = 80;
@@ -54,7 +54,7 @@ public:
 //        handle = SGP_InitDevice();
 //        ASSERT_NE(handle, 0) << "SGP_InitDevice failed!" << endl;
 //
-//        const char* server = "192.168.21.31";
+//        const char* server = "192.168.21.32";
 //        const char* username = "root";
 //        const char* password = "guide123";
 //        int port = 80;
@@ -1921,12 +1921,12 @@ TEST_F(SgpTest, 106_GetVersionInfo)
 }
 
 //107.同步系统时间
-//TEST_F(SgpTest, 107_SynchroTime)
-//{
-//    const char* datetime = "2022-12-11 11:11:11";
-//    int ret = SGP_SynchroTime(handle, datetime);
-//    EXPECT_EQ(ret, SGP_OK) << "SGP_SynchroTime failed" << endl;
-//}
+TEST_F(SgpTest, 107_SynchroTime)
+{
+    const char* datetime = "2022-12-11 11:11:11";
+    int ret = SGP_SynchroTime(handle, datetime);
+    EXPECT_EQ(ret, SGP_OK) << "SGP_SynchroTime failed" << endl;
+}
 
 //108.数据清理
 TEST_F(SgpTest, 108_ClearData)
