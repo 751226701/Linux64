@@ -106,7 +106,6 @@
     <ClCompile Include="RunAllTest.cpp" />
     <ClCompile Include="SDKNewTest.cpp" />
     <ClCompile Include="Test.cpp" />
-    <ClCompile Include="TTT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
